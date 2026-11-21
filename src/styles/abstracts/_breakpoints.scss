@@ -1,0 +1,17 @@
+@use 'sass:map';
+
+// Mobile first: базові стилі для 320+, далі лише min-width
+$breakpoints: (
+  md: 768px,
+  lg: 1280px,
+);
+
+@mixin mq($name) {
+  @if not map.has-key($breakpoints, $name) {
+    @error 'Unknown breakpoint `#{$name}`. Available: #{map.keys($breakpoints)}';
+  }
+
+  @media (min-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}

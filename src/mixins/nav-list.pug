@@ -1,0 +1,10 @@
+//- +nav-list(items, blockName) — список посилань з БЕМ-класами `${blockName}__list|__link`
+mixin nav-list(items, blockName)
+  ul(class=`${blockName}__list`)
+    each item in items
+      li
+        a(
+          class=[`${blockName}__link`, { [`${blockName}__link--active`]: item.active }],
+          href=item.href,
+          aria-current=item.active ? 'page' : false
+        )= item.text

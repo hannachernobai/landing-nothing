@@ -1,0 +1,76 @@
+@use 'functions' as *;
+
+// Дизайн-токени lab-07. У :root вони потрапляють через @each (див. base/_root.scss)
+$colors: (
+  'accent': #f95858,
+  'accent-hover': #e44646,
+  'teal': #2cd5c4,
+  'text-dark': #3a3a3c,
+  'text': #666a6e,
+  'muted': #9aa0a6,
+  'bg-light': #f0f3f4,
+  'border': #e1e5e8,
+  'footer': #2a2a2d,
+  'overlay': rgb(30 32 36 / 82%),
+  'white': #fff,
+  'logo': #b9bec3,
+  'footer-line': #3c3c40,
+  'icon-light': #c9dce8,
+  'icon-dark': #5f6b78,
+);
+$fonts: (
+  'heading': 'Oswald, "Arial Narrow", Arial, sans-serif',
+  'body': '"Open Sans", Arial, Helvetica, sans-serif',
+  'logo': '"Dancing Script", cursive',
+);
+$space-scale: 4, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32, 40, 48;
+
+// Фільтри портфоліо (мають збігатися з src/data/categories.pug)
+$work-filters: 'all', 'branding', 'identity', 'print', 'web', 'motion';
+
+// Адаптивні токени: mobile (база) → tablet 768 → desktop 1280
+$tokens-base: (
+  'fs-h1': rem(26),
+  'fs-cta': rem(22),
+  'fs-ui': rem(12),
+  'fs-quote': rem(16),
+  'fs-stat': rem(38),
+  'fs-logo': rem(22),
+  'logo-mark': 34px,
+  'fs-body': rem(14),
+  'lh-body': 22px,
+  'gutter': 20px,
+  'section-y': 56px,
+  'header-h': 64px,
+  'container': 1100px,
+  'grid-gap': 12px,
+  'card-ratio': '1 / 0.72',
+  'service-icon': 72px,
+  'post-thumb': 96px,
+  'focus': '2px solid var(--color-teal)',
+);
+$tokens-md: (
+  'fs-h1': rem(32),
+  'fs-cta': rem(24),
+  'fs-ui': rem(13),
+  'fs-quote': rem(19),
+  'fs-stat': rem(40),
+  'fs-logo': rem(26),
+  'logo-mark': 40px,
+  'gutter': 40px,
+  'section-y': 72px,
+  'header-h': 84px,
+  'card-ratio': '1 / 0.79',
+  'service-icon': 96px,
+  'post-thumb': 150px,
+);
+$tokens-lg: (
+  'fs-h1': rem(40),
+  'fs-cta': rem(28),
+  'fs-quote': rem(22),
+  'fs-stat': rem(48),
+  'gutter': 90px,
+  'section-y': 90px,
+  'header-h': 100px,
+  'grid-gap': 14px,
+);

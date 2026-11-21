@@ -1,0 +1,22 @@
+//- +icon(name[, size]) — іконка зі спрайта; розмір за замовчуванням залежить від назви
+mixin icon(name, size)
+  - let px = size;
+  if !px
+    case name
+      when 'monitor'
+      when 'tv'
+      when 'printer'
+      when 'illustration'
+        - px = 40;
+      when 'plus'
+      when 'mail'
+        - px = 16;
+      when 'burger'
+      when 'close'
+      when 'up'
+      when 'check'
+        - px = 20;
+      default
+        - px = 18;
+  svg(width=px, height=px, aria-hidden='true')&attributes(attributes)
+    use(href=`#i-${name}`)

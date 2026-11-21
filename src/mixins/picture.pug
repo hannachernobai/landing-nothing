@@ -1,0 +1,20 @@
+//- +picture({ name, widths, width, height, alt, sizes, cls, priority })
+//- <picture> з AVIF → WebP → JPEG. Без priority: loading="lazy"; з priority: fetchpriority="high"
+mixin picture(options)
+  - const { name, widths, width, height, alt = '', sizes, cls, priority = false } = options;
+  - const dir = '/src/assets/images';
+  - const srcset = (ext) => widths.map((w) => `${dir}/${name}-${w}.${ext} ${w}w`).join(', ');
+  - const fallback = `${dir}/${name}-${widths[widths.length - 1]}.jpg`;
+  picture
+    source(type='image/avif', srcset=srcset('avif'), sizes=sizes)
+    source(type='image/webp', srcset=srcset('webp'), sizes=sizes)
+    img(
+      class=cls,
+      src=fallback,
+      alt=alt,
+      width=width,
+      height=height,
+      decoding='async',
+      loading=priority ? false : 'lazy',
+      fetchpriority=priority ? 'high' : false
+    )

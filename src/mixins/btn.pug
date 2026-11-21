@@ -1,0 +1,13 @@
+//- +btn(text, href[, variant]) — кнопка-посилання.
+//- block — вкладений вміст (наприклад, іконка) перед текстом; &attributes — довільні атрибути
+mixin btn(text, href, variant = 'primary')
+  - let modifier;
+  case variant
+    when 'secondary'
+      - modifier = 'btn--secondary';
+    default
+      - modifier = 'btn--primary';
+  a.btn(class=modifier, href=href)&attributes(attributes)
+    if block
+      block
+    = text

@@ -1,0 +1,26 @@
+{
+  "extends": ["stylelint-config-standard-scss"],
+  "rules": {
+    "selector-class-pattern": [
+      "^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$",
+      {
+        "resolveNestedSelectors": true,
+        "message": "Клас має відповідати БЕМ: block__element--modifier"
+      }
+    ],
+    "max-nesting-depth": 3,
+    "selector-max-id": 0,
+    "declaration-no-important": true,
+    "media-feature-range-notation": "prefix",
+    "no-descending-specificity": null,
+    "property-no-unknown": [
+      true,
+      { "ignoreProperties": ["animation-timeline", "animation-range"] }
+    ],
+    "scss/function-no-unknown": [true, { "ignoreFunctions": ["scroll"] }],
+    "selector-pseudo-class-no-unknown": [
+      true,
+      { "ignorePseudoClasses": ["popover-open", "user-invalid"] }
+    ]
+  }
+}

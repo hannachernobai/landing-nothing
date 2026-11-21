@@ -1,0 +1,22 @@
+@use '../abstracts' as *;
+
+html {
+  scroll-padding-top: calc(64px + 16px);
+
+  @include motion-ok {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  padding-top: var(--header-h);
+  overflow-x: hidden;
+  color: var(--color-text);
+  background: var(--color-white);
+
+  @include text(400, var(--fs-body), var(--lh-body));
+}
+
+:focus-visible {
+  @include focus-ring;
+}

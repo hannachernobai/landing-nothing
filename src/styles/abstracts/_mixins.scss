@@ -1,0 +1,56 @@
+// Анімації лише для тих, хто не вимкнув їх у системі
+@mixin motion-ok {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+}
+
+@mixin transition($properties...) {
+  @include motion-ok {
+    transition-duration: 0.2s;
+    transition-property: $properties;
+  }
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip-path: inset(50%);
+}
+
+@mixin focus-ring($offset: 2px) {
+  outline: var(--focus);
+  outline-offset: $offset;
+}
+
+@mixin flex-center($display: flex) {
+  display: $display;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin button-reset {
+  padding: 0;
+  cursor: pointer;
+  background: none;
+  border: 0;
+}
+
+@mixin uppercase($spacing: 1px) {
+  text-transform: uppercase;
+  letter-spacing: $spacing;
+}
+
+// Заміна шортхенду font (щоб не мати справи з "/" у Sass)
+@mixin text($weight, $size, $line-height, $family: var(--font-body)) {
+  font-family: $family;
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height;
+}

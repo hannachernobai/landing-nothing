@@ -1,0 +1,10 @@
+.section {
+  padding-top: var(--section-y);
+
+  &__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-14);
+    margin-bottom: var(--space-14);
+  }
+}
