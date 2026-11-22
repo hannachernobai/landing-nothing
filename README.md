@@ -1,131 +1,214 @@
-# Landing Keepsake (Vite + Pug + SCSS)
+# Landing Nothing
 
-Адаптивний односторінковий лендінг дизайн-агенції **Keepsake**. Той самий макет, що й у `landing-keepsake` (lab-07), але зібраний професійним фронтенд-процесом: Pug-шаблони, модульний SCSS, PostCSS, оптимізовані зображення та автоматичний контроль якості коду.
+Адаптивний лендінг за макетом **Nothing** (варіант 2: BEM + ITCSS).
 
-- **Демо:** https://hannachernobai.github.io/landing-keepsake-vite-good/
-- **Макет:** [Keepsake — Responsive (Figma)](https://www.figma.com/design/ZMpmNEBMsLPHJF7GyoHu2f/Keepsake-%E2%80%94-Responsive)
+Основа: збірка на Vite, Pug і SCSS з лабораторної роботи №9 (PostCSS, оптимізація зображень, Prettier, Stylelint, husky, lint-staged).
 
-## Вимоги до середовища
+- **Демо:** _буде додано після публікації_
+- **Макет:** Figma, файл «BOSE New Version (Copy)», сторінка **v2 Nothing**
 
-- Node.js LTS **20 або новіший** (`node -v`)
-- npm (`npm -v`)
+## Аналіз макета
+
+Макет має три ширини: **320**, **744** і **1260**. Окремі фрейми: `Menu` (у кожній ширині), `Header Hovers`, `Icons & Logo`, `Buttons & inputs`, `Image logic`, `Grid` та `Info`.
+
+### Брейкпоінти й модульна сітка
+
+Значення виміряні за фреймами `Grid` (положення смуг колонок) і збігаються з таблицею з умови.
+
+| Ширина фрейму | Колонки | Ширина колонки | Gutter | Margin (поля) | Контент |
+| ------------- | ------- | -------------- | ------ | ------------- | ------- |
+| 320           | 2       | 130px          | 20px   | 20px          | 280px   |
+| 744           | 6       | 80px           | 24px   | 72px          | 600px   |
+| 1260          | 12      | 63px           | 24px   | 120px         | 1020px  |
+
+Перевірка: 1260 → 120 + 12 × 63 + 11 × 24 + 120 = 1260; 744 → 72 + 6 × 80 + 5 × 24 + 72 = 744; 320 → 20 + 2 × 130 + 1 × 20 + 20 = 320. Максимальна ширина контейнера 1260px.
+
+Медіазапити (mobile first): базові стилі для 320, далі `min-width: 744px` і `min-width: 1260px`.
+
+### Скільки колонок займають елементи
+
+| Елемент                          | 320                 | 744                 | 1260                          |
+| -------------------------------- | ------------------- | ------------------- | ----------------------------- |
+| Заголовок hero                   | 2 (280)             | 4 (392)             | 6 (498)                       |
+| Картка товару (3 шт.)            | 2 (280), у стовпчик | 6 (600), у стовпчик | 4 (324), у ряд                |
+| Фото категорії: широке / квадрат | 1 + 1 (130 + 130)   | 4 + 2 (392 + 184)   | 8 + 4 (672 + 324)             |
+| Кнопка «View all»                | 2 (280)             | 6 (600)             | 4 (324)                       |
+| «About us»: заголовок / текст    | 2 / 2, у стовпчик   | 3 (288) / 3 (288)   | 6 (498) / 6 (498), від кол. 7 |
+| Форма: поля й кнопка             | 2 (280)             | 6 (600)             | 5 (411)                       |
+| Блок контактів                   | 2 (280)             | 4 (392)             | 6 (498), від кол. 7           |
+
+### Кольори
+
+| Токен                        | Значення  | Де використовується                                    |
+| ---------------------------- | --------- | ------------------------------------------------------ |
+| `--color-text`               | `#292929` | текст, основна кнопка (фон), меню, рамка поля у фокусі |
+| `--color-text-strong`        | `#191919` | значення в блоці контактів                             |
+| `--color-text-muted`         | `#7e7e83` | плейсхолдер поля                                       |
+| `--color-text-label`         | `#9393a3` | підписи контактів (Phone, Email, Address)              |
+| `--color-primary`            | `#292929` | кнопка default                                         |
+| `--color-primary-pressed`    | `#111`    | кнопка pressed                                         |
+| `--color-surface`            | `#f8f8fa` | фон полів, кнопка hover                                |
+| `--color-surface-border`     | `#f0f1f4` | рамка кнопки hover (2px)                               |
+| `--color-surface-menu`       | `#e5e6e8` | фон меню-оверлею, підкладка зображення                 |
+| `--color-field-border-hover` | `#d5d7de` | рамка поля при наведенні (1px)                         |
+| `--color-field-border-focus` | `#292929` | рамка поля у фокусі (1px)                              |
+| `--color-white`              | `#fff`    | фон сторінки, текст на темній кнопці                   |
+
+Червоні й білі рамки на фреймах `Image logic` це службові позначки макета, у верстку вони не входять.
+
+### Типографіка
+
+Шрифти: **Space Grotesk** (400, 700), **Space Mono** (400) та **Inter** (700, лише підказка з номером телефону в `Header Hovers`).
+
+| Роль                             | Шрифт         | Накреслення | 320 / 744 / 1260, px | Міжрядковий інтервал | Letter-spacing |
+| -------------------------------- | ------------- | ----------- | -------------------- | -------------------- | -------------- |
+| Display (h1 hero)                | Space Grotesk | Bold        | 36 / 48 / 56         | 1                    | 0              |
+| Заголовок секції (h2)            | Space Grotesk | Bold        | 32 / 40 / 48         | 1                    | 0              |
+| Підпис категорії                 | Space Grotesk | Bold        | 18 / 24 / 24         | 1.4                  | 0              |
+| Назва товару                     | Space Grotesk | Bold        | 18 / 18 / 18         | 1.4                  | 0              |
+| Основний текст, опис             | Space Mono    | Regular     | 16                   | 1.4                  | 0              |
+| Ціна                             | Space Grotesk | Bold        | 16                   | 1.4                  | 0              |
+| Кнопка                           | Space Grotesk | Bold        | 16                   | 27px                 | 0              |
+| Текст поля, плейсхолдер          | Space Mono    | Regular     | 14                   | 1.4                  | 0              |
+| Підпис контакту                  | Space Grotesk | Regular     | 14                   | 1.4                  | 0              |
+| Значення контакту                | Space Mono    | Regular     | 16                   | 1.4                  | 0              |
+| Пункт меню                       | Space Grotesk | Bold        | 22                   | 22px                 | 2px            |
+| Телефон і «call to order» (меню) | Space Grotesk | Bold        | 16, uppercase        | 1.4                  | 2px            |
+| Номер телефону (hover шапки)     | Inter         | Bold        | 12, uppercase        | 16px                 | 2px            |
+
+Розміри меню перевірені у фреймах 1260 і 320, у 744 розташування таке саме.
+
+### Відступи (виміряні за фреймами)
+
+| Місце                             | 320         | 744         | 1260              |
+| --------------------------------- | ----------- | ----------- | ----------------- |
+| Висота шапки                      | 72          | 96          | 96                |
+| Бокові відступи шапки             | 20          | 72          | 120               |
+| Розмір іконок / логотип           | 24 / 125×16 | 32 / 172×24 | 32 / 172×24       |
+| Проміжок між іконками шапки       | 24          | 32          | 32                |
+| Заголовок секції → контент        | 48          | 56          | 56                |
+| Між картками товарів (у стовпчик) | 40          | 56          | gutter 24 (у ряд) |
+| Між блоками фото категорій        | 40          | 56          | 56                |
+| Між великими секціями             | 96          | 120         | 120               |
+| Назва, опис, ціна в картці        | 24 / 8 / 12 | 24 / 8 / 12 | 24 / 8 / 12       |
+| Між полями форми                  | 16          | 16          | 16                |
+
+Винятки: між hero і першою секцією на 320 відступ 64, між останнім текстом і «Contact us» на 320 відступ 104, між картками товарів і «Browse…» на 1260 відступ 128.
+
+Шкала відступів: 4, 8, 12, 16, 24, 32, 40, 48, 56, 64, 96, 120 px (`--space-*`).
+
+### Форми, рамки, тіні
+
+- Радіуси: **4px** (зображення), **8px** (кнопки, поля).
+- Рамка кнопки hover: 2px `#f0f1f4`. Рамка поля: 1px (`#d5d7de` hover, `#292929` focus).
+- Тіней у макеті немає.
+
+### Зображення (Image logic)
+
+Усі зображення кадруються по центру (`object-fit: cover`), висота блоку фіксована.
+
+| Зображення               | 320                     | 744                     | 1260                   |
+| ------------------------ | ----------------------- | ----------------------- | ---------------------- |
+| Hero (на всю ширину)     | висота 568, fill height | висота 993, fill height | висота 720, fill width |
+| Банер «About us»         | висота 200              | висота 400              | висота 460, fill width |
+| Картка товару            | 280 × 280               | 600 × 600               | 324 × 324              |
+| Фото категорії (широке)  | 130 × 130 (квадрат)     | 392 × 184               | 672 × 324              |
+| Фото категорії (квадрат) | 130 × 130               | 184 × 184               | 324 × 324              |
+
+### Стани елементів
+
+| Елемент    | Стани                                                                                                                  |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Кнопка     | default (`#292929`, білий текст), hover (`#f8f8fa`, рамка 2px `#f0f1f4`, текст `#292929`), pressed (`#111`)            |
+| Поле вводу | default (`#f8f8fa`, плейсхолдер `#7e7e83`), hover (рамка `#d5d7de`), focus (рамка `#292929`), filled (текст `#292929`) |
+| Textarea   | default, filled (багаторядковий текст)                                                                                 |
+| Шапка      | hover на іконці телефону показує номер ліворуч від іконки; іконка бургера змінює вигляд (`Icon-Burger-menu-hover`)     |
+| Меню       | пункт при наведенні підкреслюється; «call to order» підкреслений завжди                                                |
+
+Курсор на макеті (`Cursor / Mouse`) лише показує hover і не верстається.
+
+## БЕМ-декомпозиція
+
+Однакові за виглядом елементи це один блок із модифікаторами.
+
+```text
+header                    шапка (поверх hero-зображення)
+├── header__logo          логотип
+└── header__actions       блок іконок
+    └── icon-button       іконка-кнопка (телефон, бургер, закрити)
+        ├── icon-button__icon
+        ├── icon-button__label        номер телефону, видно при hover
+        └── icon-button--phone / --burger / --close
+
+menu                      меню-оверлей (фон #e5e6e8)
+├── menu__header          логотип + закрити
+├── menu__list > menu__item > menu__link   Products, Store, Login, Cart(0)
+└── menu__contact
+    ├── menu__phone
+    └── menu__call        «call to order», підкреслений
+
+hero                      зображення на всю ширину + заголовок
+├── hero__image
+└── hero__title           h1
+
+section-title             заголовок секції (h2): Recommended, Browse…, About us, Contact us
+
+product-card              картка товару ×3
+├── product-card__image
+├── product-card__title
+├── product-card__text
+└── product-card__price
+
+category                  блок фото категорії ×3 (All products, Audio, Accessories)
+├── category__image       модифікатори --wide, --square
+└── category__title
+
+button                    основна кнопка («View all», «Send»); стани default / hover / pressed
+
+banner                    зображення з фіксованою висотою (поруч з «About us»)
+
+about                     текст про компанію
+├── about__title          (section-title)
+└── about__text
+
+contact                   секція «Contact us»
+├── contact__form         форма
+│   ├── field             поле вводу; модифікатор --textarea
+│   │   └── field__input
+│   └── button
+└── contacts              блок контактів
+    └── contacts__item ×3 (Phone, Email, Address)
+        ├── contacts__label
+        └── contacts__value
+```
+
+Службові класи: `container`, `section`, `skip-link`, `visually-hidden`, `sprite`.
+
+### Організація стилів (ITCSS)
+
+| Шар        | Що містить                       | Папка               |
+| ---------- | -------------------------------- | ------------------- |
+| Settings   | дизайн-токени, брейкпоінти       | `styles/abstracts`  |
+| Tools      | міксини, функції (`mq`, `rem`)   | `styles/abstracts`  |
+| Generic    | reset                            | `styles/base`       |
+| Elements   | базові стилі тегів (типографіка) | `styles/base`       |
+| Objects    | контейнер, сітка, секція         | `styles/layout`     |
+| Components | один БЕМ-блок один файл          | `styles/components` |
+| Utilities  | `visually-hidden`                | `styles/base`       |
+
+## Ресурси
+
+- **Шрифти:** Google Fonts, `font-display: swap`: Space Grotesk 400/700, Space Mono 400, Inter 700.
+- **Іконки (SVG):** телефон, бургер, бургер-hover, закрити.
+- **Логотип:** у макеті це растрове зображення.
+- **Фото:** hero, банер, 3 картки товарів, 6 фото категорій.
 
 ## Команди
 
-| Команда               | Що робить                                                          |
-| --------------------- | ------------------------------------------------------------------ |
-| `npm install`         | встановлює залежності та підключає git hooks (скрипт `prepare`)    |
-| `npm run dev`         | dev-сервер Vite (http://localhost:5173/)                           |
-| `npm run build`       | продакшн-збірка у `dist/`                                          |
-| `npm run preview`     | локальний перегляд збірки (http://localhost:4173/)                 |
-| `npm run images`      | генерує AVIF/WebP/JPEG у кількох ширинах з `images-src/` (`sharp`) |
-| `npm run format`      | форматує код Prettier                                              |
-| `npm run lint`        | Stylelint для `.scss` + `prettier --check`                         |
-| `npm run lint:styles` | лише Stylelint                                                     |
-| `npm run lint:format` | лише перевірка форматування                                        |
-
-## Структура проєкту
-
-```text
-landing-keepsake-vite-good/
-├── .github/workflows/deploy.yml   # збірка й публікація на GitHub Pages
-├── .husky/                        # pre-commit (lint-staged), commit-msg (commitlint)
-├── .vscode/extensions.json        # рекомендовані розширення редактора
-├── images-src/                    # вихідні зображення (WebP)
-├── scripts/images.js              # npm run images
-├── src/
-│   ├── assets/images/             # AVIF, WebP, JPEG у двох ширинах
-│   ├── components/                # header, footer, newsletter
-│   │   └── sections/              # hero, works, cta, services, stats, clients, journal
-│   ├── data/                      # дані секцій (масиви об'єктів)
-│   ├── includes/                  # fonts, meta, SVG-спрайт
-│   ├── layouts/main.pug           # базовий макет
-│   ├── mixins/                    # Pug-міксини
-│   ├── pages/index.pug
-│   └── styles/
-│       ├── abstracts/             # токени, mq(), rem(), міксини (_index.scss з @forward)
-│       ├── base/                  # :root, reset, типографіка, утиліти
-│       ├── layout/                # контейнер, секція, header, footer
-│       ├── components/            # один БЕМ-блок — один файл
-│       ├── sections/              # блоки секцій сторінки
-│       └── main.scss              # єдина точка входу
-├── .browserslistrc
-├── postcss.config.js
-├── vite.config.js
-└── package.json
+```bash
+npm install
+npm run dev
+npm run build
+npm run preview
+npm run lint
 ```
-
-### Pug
-
-- `layouts/main.pug` має блоки `meta`, `title`, `fonts`, `styles`, `header`, `content`, `footer`, `scripts`. Міксини й дані підключаються саме в макеті.
-- `pages/index.pug` успадковує макет через `extends`, перевизначає блоки, а через `append`/`prepend` додає в `meta` опис і Open Graph, у `styles` — preload і підключення шрифтів.
-- Шапка, футер і кожна секція — окремі файли, підключені через `include`. SVG-спрайт підключається через `include` як сирий файл.
-- Усі повторювані блоки (навігація, категорії, роботи, послуги, статистика, клієнти, журнал, колонки футера, соцмережі) описані масивами в `src/data/` і виводяться через `each`.
-- Міксини: `+btn` (`block`, `&attributes`, `case`), `+icon` (`case`), `+picture`, `+work-card`, `+section-title` (`block`), `+nav-list`, `+socials`.
-
-### SCSS
-
-- Лише `@use` і `@forward`, без `@import`. Кожна папка має `_index.scss`, що реекспортує partials.
-- Кольори, шрифти, відступи й адаптивні токени оголошені як map-и в `abstracts/_tokens.scss` та генеруються в CSS custom properties у `:root` через `@each`.
-- `mq($bp)` бере значення з map-а брейкпоінтів і використовує лише `min-width` (mobile first).
-- `rem($px)` на `sass:math`, міксини `visually-hidden`, `focus-ring`, `flex-center($display: flex)`, `uppercase($spacing: 1px)`, `text(...)`, `transition(...)`.
-- БЕМ через `&__element` і `&--modifier`, вкладеність не глибше 3, без `id` і `!important`.
-- Фільтр портфоліо на `:checked ~` генерується циклом `@each` за списком `$work-filters`.
-
-## Інструменти
-
-| Інструмент                                     | Навіщо                                                            |
-| ---------------------------------------------- | ----------------------------------------------------------------- |
-| Vite + vituum + `@vituum/vite-plugin-pug`      | dev-сервер, збірка, компіляція Pug у HTML                         |
-| Sass                                           | препроцесор: `@use`/`@forward`, map-и, функції, міксини           |
-| PostCSS + Autoprefixer                         | постпроцесор: вендорні префікси під Browserslist                  |
-| Browserslist                                   | список цільових браузерів (`.browserslistrc`)                     |
-| sharp                                          | AVIF/WebP/JPEG у кількох розмірах (`npm run images`)              |
-| Prettier + `@prettier/plugin-pug`              | єдине форматування `.pug`, `.scss`, `.js`, `.json`, `.md`, `.yml` |
-| Stylelint + `stylelint-config-standard-scss`   | якість SCSS, БЕМ-шаблон класів, ліміт вкладеності                 |
-| husky + lint-staged                            | pre-commit: перевірка лише змінених файлів                        |
-| commitlint + `@commitlint/config-conventional` | повідомлення комітів за Conventional Commits                      |
-| `.editorconfig`, `.vscode/extensions.json`     | однакові налаштування редактора для всієї команди                 |
-| GitHub Actions                                 | `npm ci` → `lint` → `build` → публікація на GitHub Pages          |
-
-CSS мініфікується самим Vite під час `npm run build` (esbuild), окремий мініфікатор не потрібен. Autoprefixer Vite не містить, тому він підключений через `postcss.config.js`.
-
-## Цільові браузери
-
-Останні 2 версії Chrome, Firefox, Edge, Safari та iOS Safari (`.browserslistrc`). Перевірити список: `npx browserslist`, перевірити префікси: `npx autoprefixer --info`.
-
-## Оптимізація
-
-Зображення (найбільша ширина кожного, сума по 13 файлах):
-
-| Формат                  | Розмір, байт |
-| ----------------------- | ------------ |
-| Вихідний WebP           | 32 730       |
-| AVIF                    | 24 701       |
-| WebP (перекодований)    | 30 454       |
-| JPEG (запасний варіант) | 91 042       |
-
-Браузер вибирає AVIF, якщо підтримує, інакше WebP, інакше JPEG, а з `srcset`/`sizes` — ще й потрібну ширину. Вихідні файли — прості ілюстрації, тож на реальних фото різниця між форматами буде значно більшою.
-
-CSS:
-
-| Етап                                      | Розмір, байт            |
-| ----------------------------------------- | ----------------------- |
-| lab-07 (`reset.css` + `style.css`)        | 24 291                  |
-| `dist/assets/*.css` після `npm run build` | ≈ 23 780 (gzip ≈ 4 590) |
-
-## Публікація
-
-Сайт опубліковано на GitHub Pages: https://hannachernobai.github.io/landing-keepsake-vite-good/
-
-Збірку й публікацію виконує workflow `.github/workflows/deploy.yml` при кожному push у `main`: `npm ci` → `npm run lint` → `npm run build` → деплой папки `dist/`. Папка `dist` у репозиторій не комітиться.
-
-Налаштування в репозиторії: **Settings → Pages → Source: GitHub Actions**.
-
-### Параметр `base`
-
-Сайт лежить у підпапці `/landing-keepsake-vite-good/`, тому під час збірки в GitHub Actions `vite.config.js` виставляє `base` за назвою репозиторію (змінна `GITHUB_REPOSITORY`). Без цього браузер шукав би стилі й зображення в корені `github.io` і не знайшов би їх. Локально (`dev`, `build`, `preview`) змінної немає, тому `base` дорівнює `/` і сайт працює з кореня.
-
-### Особливості збірки
-
-Плагін vituum зберігає зібрану сторінку як `dist/index.pug.html`. Невеликий власний плагін у `vite.config.js` перейменовує її на `index.html`, інакше сервер і GitHub Pages не знайдуть головну сторінку.

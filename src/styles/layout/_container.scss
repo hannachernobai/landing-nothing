@@ -1,6 +1,7 @@
+// Контейнер: max 1260, поля 20 / 72 / 120 (контент на 1260 = 1020)
 .container {
   width: 100%;
-  max-width: calc(var(--container) + 2 * var(--gutter));
-  padding-inline: var(--gutter);
+  max-width: var(--container-max);
+  padding-inline: var(--page-margin);
   margin-inline: auto;
 }
