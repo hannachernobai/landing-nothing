@@ -1,0 +1,46 @@
+@use '../2-tools' as *;
+
+// Вертикальний ритм секцій; заголовок і зміст секції задають відступи через міксини
+.o-section {
+  padding-top: var(--space-section);
+
+  &:last-child {
+    padding-bottom: var(--space-section);
+  }
+
+  // між hero і першою секцією на 320 відступ 64
+  &--after-hero {
+    padding-top: var(--space-64);
+
+    @include mq(md) {
+      padding-top: var(--space-section);
+    }
+  }
+
+  // між картками товарів і «Browse» на 1260 відступ 128
+  &--browse {
+    @include mq(lg) {
+      padding-top: 128px;
+    }
+  }
+
+  // між останнім текстом і «Contact us» на 320 відступ 104
+  &--contact {
+    padding-top: 104px;
+
+    @include mq(md) {
+      padding-top: var(--space-section);
+    }
+  }
+
+  // заголовок секції: ширина 2 / 5 / 6 колонок
+  &__title {
+    max-width: var(--title-w);
+    margin-bottom: var(--space-block);
+  }
+
+  // блок після банера
+  &__body {
+    margin-top: var(--space-block);
+  }
+}

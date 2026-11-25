@@ -1,0 +1,18 @@
+// Модульна сітка макета: 2 / 6 / 12 колонок, gutter 20 / 24 / 24 (значення в :root)
+.o-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  column-gap: var(--grid-gutter);
+
+  // Режим налагодження: додайте клас до будь-якого .o-grid, щоб побачити колонки
+  &--debug {
+    --gaps: calc((var(--grid-columns) - 1) * var(--grid-gutter));
+    --col: calc((100% - var(--gaps)) / var(--grid-columns));
+
+    background-image: repeating-linear-gradient(
+      to right,
+      rgb(255 0 80 / 18%) 0 var(--col),
+      transparent var(--col) calc(var(--col) + var(--grid-gutter))
+    );
+  }
+}

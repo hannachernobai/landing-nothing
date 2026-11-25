@@ -1,0 +1,9 @@
+@use '../2-tools' as *;
+
+// Утиліти можуть використовувати !important
+.u-hidden-lg {
+  @include mq(lg) {
+    // stylelint-disable-next-line declaration-no-important
+    display: none !important;
+  }
+}

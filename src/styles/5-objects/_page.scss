@@ -1,0 +1,8 @@
+// Шапка лежить поверх hero-зображення
+.o-page {
+  &__header {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 10;
+  }
+}
