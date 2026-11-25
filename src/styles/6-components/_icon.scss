@@ -1,0 +1,9 @@
+.c-icon {
+  display: block;
+  flex: none;
+
+  &--logo {
+    width: var(--logo-w);
+    height: var(--logo-h);
+  }
+}

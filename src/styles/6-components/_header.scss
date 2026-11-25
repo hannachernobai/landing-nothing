@@ -1,0 +1,20 @@
+// Шапка: логотип ліворуч, іконки праворуч (позиціонує її o-page__header)
+.c-header {
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-h);
+    color: var(--color-text);
+  }
+
+  &__logo {
+    display: block;
+  }
+
+  &__actions {
+    display: flex;
+    gap: var(--header-gap);
+    align-items: center;
+  }
+}

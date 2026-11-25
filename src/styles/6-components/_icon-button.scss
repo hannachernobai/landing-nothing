@@ -1,0 +1,47 @@
+@use '../2-tools' as *;
+
+// Іконка-кнопка шапки й меню: телефон, бургер, закрити
+.c-icon-button {
+  @include flex-center;
+
+  position: relative;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  color: var(--color-text);
+
+  &__icon {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__icon--hover {
+    display: none;
+  }
+
+  // Номер телефону з'являється ліворуч від іконки при наведенні
+  &__label {
+    position: absolute;
+    top: 50%;
+    right: calc(100% + var(--space-8));
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-50%);
+
+    @include text(var(--fw-bold), var(--fs-hint), var(--lh-hint), var(--font-ui));
+    @include uppercase(var(--ls-caps));
+    @include transition(opacity);
+  }
+
+  &:is(:hover, :focus-visible) &__label {
+    opacity: 1;
+  }
+
+  &:is(:hover, :focus-visible) &__icon--rest {
+    display: none;
+  }
+
+  &:is(:hover, :focus-visible) &__icon--hover {
+    display: block;
+  }
+}
