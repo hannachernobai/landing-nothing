@@ -4,8 +4,9 @@
 
 Основа: збірка на Vite, Pug і SCSS з лабораторної роботи №9 (PostCSS, оптимізація зображень, Prettier, Stylelint, husky, lint-staged).
 
-- **Демо:** _буде додано після публікації_
-- **Макет:** Figma, файл «BOSE New Version (Copy)», сторінка **v2 Nothing**
+- **Демо:** https://ВАШ-НІКНЕЙМ.github.io/landing-nothing/ _(заміни на свою адресу GitHub Pages)_
+- **Макет:** [Figma, файл «BOSE New Version (Copy)», сторінка v2 Nothing](https://www.figma.com/design/5AnTiZpjs3IGnnaSFfQOCT/BOSE-New-Version--Copy-?node-id=6802-139)
+- **Варіант:** 2, Nothing, методологія BEM + ITCSS
 
 ## Аналіз макета
 
@@ -132,60 +133,60 @@
 Однакові за виглядом елементи це один блок із модифікаторами.
 
 ```text
-header                    шапка (поверх hero-зображення)
-├── header__logo          логотип
-└── header__actions       блок іконок
-    └── icon-button       іконка-кнопка (телефон, бургер, закрити)
-        ├── icon-button__icon
-        ├── icon-button__label        номер телефону, видно при hover
-        └── icon-button--phone / --burger / --close
+c-header                    шапка (поверх hero-зображення)
+├── c-header__logo          логотип
+└── c-header__actions       блок іконок
+    └── c-icon-button       іконка-кнопка (телефон, бургер, закрити)
+        ├── c-icon-button__icon
+        ├── c-icon-button__label        номер телефону, видно при hover
+        └── c-icon-button--phone / --burger / --close
 
-menu                      меню-оверлей (фон #e5e6e8)
-├── menu__header          логотип + закрити
-├── menu__list > menu__item > menu__link   Products, Store, Login, Cart(0)
-└── menu__contact
-    ├── menu__phone
-    └── menu__call        «call to order», підкреслений
+c-menu                      меню-оверлей (фон #e5e6e8)
+├── c-menu__header          логотип + закрити
+├── c-menu__list > li > c-menu__link   Products, Store, Login, Cart(0)
+└── c-menu__contact
+    ├── c-menu__phone
+    └── c-menu__call        «call to order», підкреслений
 
-hero                      зображення на всю ширину + заголовок
-├── hero__image
-└── hero__title           h1
+c-hero                      зображення на всю ширину + заголовок
+├── c-hero__image
+└── c-hero__title           h1
 
-section-title             заголовок секції (h2): Recommended, Browse…, About us, Contact us
+c-section-title             заголовок секції (h2): Recommended, Browse…, About us, Contact us
 
-product-card              картка товару ×3
-├── product-card__image
-├── product-card__title
-├── product-card__text
-└── product-card__price
+c-product-card              картка товару ×3
+├── c-product-card__image
+├── c-product-card__title
+├── c-product-card__text
+└── c-product-card__price
 
-products                  список карток (сітка), products__item
-categories                список категорій, categories__item
-category                  блок категорії ×3 (All products, Audio, Accessories)
-├── category__media       модифікатори --wide, --square
-├── category__image
-└── category__title
+c-products                  список карток (сітка), c-products__item
+c-categories                список категорій, c-categories__item
+c-category                  блок категорії ×3 (All products, Audio, Accessories)
+├── c-category__media       модифікатори --wide, --square
+├── c-category__image
+└── c-category__title
 
-button                    основна кнопка («View all», «Send»); стани default / hover / pressed
+c-button                    основна кнопка («View all», «Send»); стани default / hover / pressed
 
-banner                    зображення з фіксованою висотою (поруч з «About us»)
+c-banner                    зображення з фіксованою висотою (поруч з «About us»)
 
-about                     текст про компанію
-├── about__title          (section-title)
-└── about__text
+c-about                     текст про компанію
+├── c-about__title          (section-title)
+└── c-about__text
 
-contact                   секція «Contact us»
-├── contact__form         форма
-│   ├── field             поле вводу; модифікатор --textarea
-│   │   └── field__input
-│   └── button
-└── contacts              блок контактів
-    └── contacts__item ×3 (Phone, Email, Address)
-        ├── contacts__label
-        └── contacts__value
+c-contact                   секція «Contact us»
+├── c-contact__form         форма
+│   ├── c-field             поле вводу; модифікатор --textarea
+│   │   └── c-field__input
+│   └── c-button
+└── c-contacts              блок контактів
+    └── c-contacts__item ×3 (Phone, Email, Address)
+        ├── c-contacts__label
+        └── c-contacts__value
 ```
 
-У коді всі класи мають префікс шару (`c-`, `o-`, `u-`), див. розділ «Архітектура стилів».
+Усі класи мають префікс шару (`c-` компоненти, `o-` об'єкти, `u-` утиліти), див. розділ «Архітектура стилів».
 
 ## Архітектура стилів
 
@@ -227,12 +228,13 @@ src/styles/
 ## Команди
 
 ```bash
-npm install
-npm run images   # генерує src/assets/images з images-src
-npm run dev
-npm run build
-npm run preview
-npm run lint
+npm install        # встановити залежності
+npm run images     # згенерувати AVIF/WebP/JPEG у src/assets/images з images-src
+npm run dev        # сервер розробки (http://localhost:5173)
+npm run build      # збірка в dist
+npm run preview    # локальний перегляд збірки з dist
+npm run lint       # Stylelint + перевірка Prettier
+npm run format     # автоформатування Prettier
 ```
 
 ## Нотатки щодо реалізації
@@ -241,3 +243,27 @@ npm run lint
 - Hover шапки (номер телефону, зміна іконки бургера) зроблений на CSS.
 - Іконки (телефон, бургер, бургер-hover, закрити) у `src/includes/sprite.svg` експортовані з Figma (`Icons & Logo`). Логотип у макеті растровий, тому його векторизовано в SVG; колір керується через `currentColor`.
 - Hero використовує повне вихідне зображення з макета та `object-fit: cover` із `object-position: center`: так отримуємо потрібне кадрування на 320 (fill height), 744 (fill height) і 1260+ (fill width).
+
+## Публікація
+
+Сайт публікується на GitHub Pages через GitHub Actions (`.github/workflows/deploy.yml`) при кожному пуші в гілку `main`. У `vite.config.js` `base` береться зі змінної `GITHUB_REPOSITORY`, тому шляхи до ресурсів працюють на `https://<користувач>.github.io/landing-nothing/`.
+
+## Pixel perfect
+
+Звірка з макетом через розширення PerfectPixel, допустиме відхилення не більше 5px.
+
+| 320                        | 744                        | 1260                         |
+| -------------------------- | -------------------------- | ---------------------------- |
+| ![320](docs/pixel-320.png) | ![744](docs/pixel-744.png) | ![1260](docs/pixel-1260.png) |
+
+## Якість: валідація та PageSpeed
+
+**W3C Validator**, 0 помилок:
+
+![W3C Validator](docs/w3c.png)
+
+**PageSpeed Insights**, усі показники 90–100:
+
+![PageSpeed Mobile](docs/psi-mobile.png)
+
+![PageSpeed Desktop](docs/psi-desktop.png)
