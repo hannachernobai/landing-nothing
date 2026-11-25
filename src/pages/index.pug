@@ -33,23 +33,22 @@ block header
           +icon('burger').c-icon-button__icon.c-icon-button__icon--rest
           +icon('burger-hover').c-icon-button__icon.c-icon-button__icon--hover
 
-  #menu.c-menu(popover, aria-label='Menu')
-    .o-container
-      .c-menu__header
-        a.c-menu__logo(href='#top', aria-label='Nothing, back to top')
-          +icon('logo').c-icon--logo
-        button.c-icon-button.c-icon-button--close(
-          type='button',
-          popovertarget='menu',
-          popovertargetaction='hide',
-          aria-label='Close menu'
-        )
-          +icon('close').c-icon-button__icon
-      nav.c-menu__nav(aria-label='Main')
-        +nav-list(site.menu, 'c-menu')
-      .c-menu__contact
-        a.c-menu__phone(href=`tel:${site.phoneHref}`)= site.phone
-        a.c-menu__call(href=`tel:${site.phoneHref}`) Call to order
+  #menu.c-menu(popover, role='dialog', aria-label='Menu') .o-container
+    .c-menu__header
+      a.c-menu__logo(href='#top', aria-label='Nothing, back to top')
+        +icon('logo').c-icon--logo
+      button.c-icon-button.c-icon-button--close(
+        type='button',
+        popovertarget='menu',
+        popovertargetaction='hide',
+        aria-label='Close menu'
+      )
+        +icon('close').c-icon-button__icon
+    nav.c-menu__nav(aria-label='Main')
+      +nav-list(site.menu, 'c-menu')
+    .c-menu__contact
+      a.c-menu__phone(href=`tel:${site.phoneHref}`)= site.phone
+      a.c-menu__call(href=`tel:${site.phoneHref}`) Call to order
 
 block content
   section.c-hero(aria-labelledby='hero-title')
@@ -92,7 +91,7 @@ block content
 
   section#browse.o-section.o-section--browse(aria-labelledby='browse-title')
     .o-container
-      +section-title('browse-title').o-section__title Browse by category
+      +section-title('browse-title').o-section__title Browse Nothing products by category
       ul.c-categories.o-grid
         each category in site.categories
           li.c-categories__item
@@ -136,7 +135,9 @@ block content
     .o-container.o-section__body
       .c-about.o-grid
         +section-title('about-title').c-about__title About us
-        p.c-about__text= site.about
+        .c-about__text
+          each paragraph in site.about
+            p.c-about__paragraph!= paragraph
 
   section#contact.o-section.o-section--contact(aria-labelledby='contact-title')
     .o-container
@@ -181,4 +182,4 @@ block content
               a(href=`mailto:${site.email}`)= site.email
           .c-contacts__item
             dt.c-contacts__label Address
-            dd.c-contacts__value= site.address
+            dd.c-contacts__value!= site.address.join('<br>')
