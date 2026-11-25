@@ -16,4 +16,9 @@
       grid-column: span 6;
     }
   }
+
+  // абзаци тексту розділені порожнім рядком
+  &__paragraph + &__paragraph {
+    margin-top: 1.4em;
+  }
 }
