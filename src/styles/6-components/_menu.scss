@@ -40,9 +40,9 @@
     text-decoration-line: underline;
     text-decoration-color: transparent;
     text-underline-offset: 4px;
+    letter-spacing: var(--ls-caps);
 
     @include text(var(--fw-bold), var(--fs-menu), var(--lh-menu), var(--font-heading));
-    @include uppercase(var(--ls-caps));
     @include transition(text-decoration-color);
 
     &:hover {
