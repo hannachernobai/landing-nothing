@@ -252,9 +252,9 @@ npm run format     # автоформатування Prettier
 
 Звірка з макетом через розширення PerfectPixel, допустиме відхилення не більше 5px.
 
-| 320                        | 744                        | 1260                         |
-| -------------------------- | -------------------------- | ---------------------------- |
-| ![320](docs/pixel-320.png) | ![744](docs/pixel-744.png) | ![1260](docs/pixel-1260.png) |
+| 320                                                             | 744                            | 1260                              |
+| --------------------------------------------------------------- | ------------------------------ | --------------------------------- |
+| ![320](landing-nothing/Знімок екрана з 2026-11-25 10-49-04.png) | ![744](![alt text](image.png)) | ![1260](![alt text](image-1.png)) |
 
 ## Якість: валідація та PageSpeed
 
@@ -264,6 +264,6 @@ npm run format     # автоформатування Prettier
 
 **PageSpeed Insights**, усі показники 90–100:
 
-![PageSpeed Mobile](docs/psi-mobile.png)
+![PageSpeed Mobile](docs/image.png)
 
-![PageSpeed Desktop](docs/psi-desktop.png)
+![PageSpeed Desktop](docs/image copy.png)
