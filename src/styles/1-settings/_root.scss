@@ -1,0 +1,32 @@
+@use '../2-tools' as *;
+@use 'tokens' as *;
+@use 'breakpoints' as *;
+
+// Settings: усі токени потрапляють у :root як CSS custom properties
+:root {
+  @each $name, $value in $colors {
+    --color-#{$name}: #{$value};
+  }
+
+  @each $name, $value in $fonts {
+    --font-#{$name}: #{$value};
+  }
+
+  @each $step in $space-scale {
+    --space-#{$step}: #{$step * 1px};
+  }
+
+  @each $name, $value in $tokens-base {
+    --#{$name}: #{$value};
+  }
+}
+
+@each $bp, $tokens in (md: $tokens-md, lg: $tokens-lg) {
+  @include mq($bp) {
+    :root {
+      @each $name, $value in $tokens {
+        --#{$name}: #{$value};
+      }
+    }
+  }
+}

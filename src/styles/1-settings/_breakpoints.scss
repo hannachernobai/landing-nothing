@@ -1,0 +1,6 @@
+// Mobile first: базові стилі для 320, далі лише min-width.
+// Значення з макета Nothing (фрейми 320 / 744 / 1260).
+$breakpoints: (
+  md: 744px,
+  lg: 1260px,
+);
