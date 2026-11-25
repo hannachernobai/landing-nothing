@@ -246,24 +246,8 @@ npm run format     # автоформатування Prettier
 
 ## Публікація
 
-Сайт публікується на GitHub Pages через GitHub Actions (`.github/workflows/deploy.yml`) при кожному пуші в гілку `main`. У `vite.config.js` `base` береться зі змінної `GITHUB_REPOSITORY`, тому шляхи до ресурсів працюють на `https://<користувач>.github.io/landing-nothing/`.
+Сайт публікується на GitHub Pages через GitHub Actions (`.github/workflows/deploy.yml`) при кожному пуші в гілку `main`. У `vite.config.js` `base` береться зі змінної `GITHUB_REPOSITORY`, тому шляхи до ресурсів працюють на `https://hannachernobai.github.io/landing-nothing/`.
 
-## Pixel perfect
+## Pixel perfect та W3C Validator
 
-Звірка з макетом через розширення PerfectPixel, допустиме відхилення не більше 5px.
-
-| 320                                                             | 744                            | 1260                              |
-| --------------------------------------------------------------- | ------------------------------ | --------------------------------- |
-| ![320](landing-nothing/Знімок екрана з 2026-11-25 10-49-04.png) | ![744](![alt text](image.png)) | ![1260](![alt text](image-1.png)) |
-
-## Якість: валідація та PageSpeed
-
-**W3C Validator**, 0 помилок:
-
-![W3C Validator](docs/w3c.png)
-
-**PageSpeed Insights**, усі показники 90–100:
-
-![PageSpeed Mobile](docs/image.png)
-
-![PageSpeed Desktop](docs/image copy.png)
+[Скріншоти перевірок](../docs)
