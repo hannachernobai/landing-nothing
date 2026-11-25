@@ -1,0 +1,68 @@
+@use '../2-tools' as *;
+
+// Меню-оверлей на popover: відкривається й закривається без JavaScript
+.c-menu {
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+  color: var(--color-text);
+  background: var(--color-surface-menu);
+  border: 0;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-h);
+  }
+
+  &__logo {
+    display: block;
+  }
+
+  &__nav {
+    padding-top: var(--menu-gap);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-32);
+  }
+
+  &__link {
+    display: inline-block;
+    text-decoration-line: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 4px;
+
+    @include text(var(--fw-bold), var(--fs-menu), var(--lh-menu), var(--font-heading));
+    @include uppercase(var(--ls-caps));
+    @include transition(text-decoration-color);
+
+    &:hover {
+      text-decoration-color: currentcolor;
+    }
+  }
+
+  &__contact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+    align-items: flex-start;
+    padding-block: var(--space-48);
+
+    @include text(var(--fw-bold), var(--fs-caps), var(--lh-menu), var(--font-heading));
+    @include uppercase(var(--ls-caps));
+  }
+
+  &__call {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
