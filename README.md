@@ -159,8 +159,11 @@ product-card              картка товару ×3
 ├── product-card__text
 └── product-card__price
 
-category                  блок фото категорії ×3 (All products, Audio, Accessories)
-├── category__image       модифікатори --wide, --square
+products                  список карток (сітка), products__item
+categories                список категорій, categories__item
+category                  блок категорії ×3 (All products, Audio, Accessories)
+├── category__media       модифікатори --wide, --square
+├── category__image
 └── category__title
 
 button                    основна кнопка («View all», «Send»); стани default / hover / pressed
@@ -182,19 +185,37 @@ contact                   секція «Contact us»
         └── contacts__value
 ```
 
-Службові класи: `container`, `section`, `skip-link`, `visually-hidden`, `sprite`.
+У коді всі класи мають префікс шару (`c-`, `o-`, `u-`), див. розділ «Архітектура стилів».
 
-### Організація стилів (ITCSS)
+## Архітектура стилів
 
-| Шар        | Що містить                       | Папка               |
-| ---------- | -------------------------------- | ------------------- |
-| Settings   | дизайн-токени, брейкпоінти       | `styles/abstracts`  |
-| Tools      | міксини, функції (`mq`, `rem`)   | `styles/abstracts`  |
-| Generic    | reset                            | `styles/base`       |
-| Elements   | базові стилі тегів (типографіка) | `styles/base`       |
-| Objects    | контейнер, сітка, секція         | `styles/layout`     |
-| Components | один БЕМ-блок один файл          | `styles/components` |
-| Utilities  | `visually-hidden`                | `styles/base`       |
+Методологія варіанта 2: **BEM + ITCSS**. Один БЕМ-блок: один SCSS-partial. Стилі йдуть від загального до конкретного, специфічність зростає зверху вниз («перевернутий трикутник»).
+
+```text
+src/styles/
+├── 1-settings/    токени (кольори, шрифти, відступи, розміри), брейкпоінти, :root з custom properties
+├── 2-tools/       міксини (mq, text, uppercase, ...) і функції (rem)
+├── 3-generic/     reset, box-sizing
+├── 4-elements/    стилі HTML-елементів без класів (body, :focus-visible)
+├── 5-objects/     o-container, o-grid, o-section, o-page: структура без оформлення
+├── 6-components/  c-header, c-menu, c-hero, c-product-card, c-button ...: БЕМ-блоки
+├── 7-utilities/   u-visually-hidden, u-hidden-lg (тут дозволено !important)
+└── main.scss      підключення шарів строго від 1 до 7
+```
+
+### Правила іменування
+
+- Формат `префікс-блок__елемент--модифікатор`: `.c-product-card__title`, `.c-category--reverse`.
+- Префікси шарів: `o-` об'єкти, `c-` компоненти, `u-` утиліти. Stylelint (`selector-class-pattern`) перевіряє і БЕМ, і префікси.
+- Жодних `id` у селекторах, жодних селекторів за тегами всередині блоків, вкладеність не більше 3, без `!important` (крім `7-utilities`, для цієї папки в `.stylelintrc.json` зроблено виняток).
+- Блок не задає власних зовнішніх відступів і позиціонування. Це робить батьківський блок через мікс: `c-section-title o-section__title`, `c-header o-page__header`, `c-button c-contact__submit`.
+- Медіазапити лише через міксин `mq(md | lg)` (mobile first).
+
+### Сітка
+
+`.o-grid` це CSS Grid з `grid-template-columns: repeat(var(--grid-columns), 1fr)`; кількість колонок і gutter беруться з токенів (2 / 6 / 12 і 20 / 24 / 24). Контейнер `.o-container` обмежує ширину (`max-width: 1260px`), поля 20 / 72 / 120. Елементи розташовані за колонками (`grid-column: span N`), а не за ширинами в пікселях. Hero і банер виходять за межі сітки на всю ширину viewport.
+
+Режим налагодження: додайте клас `o-grid--debug` до будь-якого `.o-grid` у DevTools, і колонки підсвітяться.
 
 ## Ресурси
 
@@ -207,8 +228,16 @@ contact                   секція «Contact us»
 
 ```bash
 npm install
+npm run images   # генерує src/assets/images з images-src
 npm run dev
 npm run build
 npm run preview
 npm run lint
 ```
+
+## Нотатки щодо реалізації
+
+- Меню-оверлей працює без JavaScript на атрибуті `popover` (кнопки `popovertarget`).
+- Hover шапки (номер телефону, зміна іконки бургера) зроблений на CSS.
+- Іконки (телефон, бургер, бургер-hover, закрити) у `src/includes/sprite.svg` експортовані з Figma (`Icons & Logo`). Логотип у макеті растровий, тому його векторизовано в SVG; колір керується через `currentColor`.
+- Hero використовує повне вихідне зображення з макета та `object-fit: cover` із `object-position: center`: так отримуємо потрібне кадрування на 320 (fill height), 744 (fill height) і 1260+ (fill width).
