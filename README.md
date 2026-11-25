@@ -250,4 +250,4 @@ npm run format     # автоформатування Prettier
 
 ## Pixel perfect та W3C Validator
 
-[Скріншоти перевірок](../docs)
+[Скріншоти перевірок](./docs)
