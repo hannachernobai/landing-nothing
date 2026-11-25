@@ -15,5 +15,170 @@ block append styles
   //- append: самі шрифти підключаємо після основних стилів
   link(rel='stylesheet', href=site.fontsUrl)
 
+block header
+  //- c-header — блок, o-page__header — позиціонування поверх hero (міксом)
+  header.c-header.o-page__header
+    .c-header__inner.o-container
+      a.c-header__logo(href='#top', aria-label='Nothing, back to top')
+        +icon('logo').c-icon--logo
+      .c-header__actions
+        a.c-icon-button.c-icon-button--phone(href=`tel:${site.phoneHref}`)
+          span.c-icon-button__label= site.phone
+          +icon('phone').c-icon-button__icon.c-icon-button__icon--rest
+        button.c-icon-button.c-icon-button--burger(
+          type='button',
+          popovertarget='menu',
+          aria-label='Open menu'
+        )
+          +icon('burger').c-icon-button__icon.c-icon-button__icon--rest
+          +icon('burger-hover').c-icon-button__icon.c-icon-button__icon--hover
+
+  #menu.c-menu(popover, aria-label='Menu')
+    .o-container
+      .c-menu__header
+        a.c-menu__logo(href='#top', aria-label='Nothing, back to top')
+          +icon('logo').c-icon--logo
+        button.c-icon-button.c-icon-button--close(
+          type='button',
+          popovertarget='menu',
+          popovertargetaction='hide',
+          aria-label='Close menu'
+        )
+          +icon('close').c-icon-button__icon
+      nav.c-menu__nav(aria-label='Main')
+        +nav-list(site.menu, 'c-menu')
+      .c-menu__contact
+        a.c-menu__phone(href=`tel:${site.phoneHref}`)= site.phone
+        a.c-menu__call(href=`tel:${site.phoneHref}`) Call to order
+
 block content
-  h1 Bring joy back to the everyday
+  section.c-hero(aria-labelledby='hero-title')
+    +picture({
+      name: 'hero',
+      widths: [712, 1244, 1920, 2520],
+      width: 3840,
+      height: 3065,
+      alt: 'Woman holding a Nothing phone in front of her eye',
+      sizes: '(min-width: 1260px) 100vw, (min-width: 744px) 1244px, 712px',
+      cls: 'c-hero__image',
+      priority: true,
+    })
+    .c-hero__inner.o-container.o-grid
+      h1#hero-title.c-hero__title Bring joy back to the everyday
+
+  section#recommended.o-section.o-section--after-hero(aria-labelledby='recommended-title')
+    .o-container
+      +section-title('recommended-title').o-section__title Recommended
+      ul.c-products.o-grid
+        each product in site.products
+          li.c-products__item
+            article.c-product-card
+              +picture({
+                name: product.image,
+                widths: product.widths,
+                width: product.width,
+                height: product.height,
+                alt: product.alt,
+                sizes: '(min-width: 1260px) 324px, (min-width: 744px) 600px, 280px',
+                cls: 'c-product-card__image',
+              })
+              .c-product-card__body
+                h3.c-product-card__title= product.name
+                p.c-product-card__text
+                  if product.lead
+                    span.u-hidden-lg= product.lead
+                  = product.text
+                p.c-product-card__price= product.price
+
+  section#browse.o-section.o-section--browse(aria-labelledby='browse-title')
+    .o-container
+      +section-title('browse-title').o-section__title Browse by category
+      ul.c-categories.o-grid
+        each category in site.categories
+          li.c-categories__item
+            article.c-category(class=category.reverse ? 'c-category--reverse' : false)
+              .c-category__photos.o-grid
+                figure.c-category__media.c-category__media--wide
+                  +picture({
+                    name: category.wide.image,
+                    widths: [392, 672, 1344],
+                    width: 1344,
+                    height: 648,
+                    alt: category.wide.alt,
+                    sizes: '(min-width: 1260px) 672px, (min-width: 744px) 392px, 130px',
+                    cls: 'c-category__image',
+                  })
+                figure.c-category__media.c-category__media--square
+                  +picture({
+                    name: category.square.image,
+                    widths: [184, 324, 648],
+                    width: 648,
+                    height: 648,
+                    alt: category.square.alt,
+                    sizes: '(min-width: 1260px) 324px, (min-width: 744px) 184px, 130px',
+                    cls: 'c-category__image',
+                  })
+              h3.c-category__title= category.title
+        li.c-categories__more
+          +button('View all', '#recommended').c-categories__button
+
+  section.o-section(aria-labelledby='about-title')
+    .c-banner
+      +picture({
+        name: 'banner',
+        widths: [744, 1260, 1592],
+        width: 1592,
+        height: 1269,
+        alt: '',
+        sizes: '100vw',
+        cls: 'c-banner__image',
+      })
+    .o-container.o-section__body
+      .c-about.o-grid
+        +section-title('about-title').c-about__title About us
+        p.c-about__text= site.about
+
+  section#contact.o-section.o-section--contact(aria-labelledby='contact-title')
+    .o-container
+      +section-title('contact-title').o-section__title Contact us
+      .c-contact.o-grid
+        form.c-contact__form(action='#', method='get')
+          .c-field
+            label.u-visually-hidden(for='contact-name') Name
+            input#contact-name.c-field__input(
+              type='text',
+              name='name',
+              placeholder='Name',
+              autocomplete='name',
+              required
+            )
+          .c-field
+            label.u-visually-hidden(for='contact-email') Email
+            input#contact-email.c-field__input(
+              type='email',
+              name='email',
+              placeholder='Email',
+              autocomplete='email',
+              required
+            )
+          .c-field.c-field--textarea
+            label.u-visually-hidden(for='contact-message') Message
+            textarea#contact-message.c-field__input(
+              name='message',
+              placeholder='Message',
+              autocomplete='off',
+              required
+            )
+          +button('Send', false, 'submit').c-contact__submit
+        dl.c-contacts.c-contact__contacts
+          .c-contacts__item
+            dt.c-contacts__label Phone
+            dd.c-contacts__value
+              a(href=`tel:${site.phoneHref}`)= site.phone
+          .c-contacts__item
+            dt.c-contacts__label Email
+            dd.c-contacts__value
+              a(href=`mailto:${site.email}`)= site.email
+          .c-contacts__item
+            dt.c-contacts__label Address
+            dd.c-contacts__value= site.address

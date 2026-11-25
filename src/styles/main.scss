@@ -1,4 +1,8 @@
-// Єдина точка входу стилів. Порядок: від загального до конкретного
-@use 'base';
-@use 'layout';
-@use 'components';
+// Єдина точка входу стилів. ITCSS: строго від шару 1 до 7,
+// специфічність зростає зверху вниз («перевернутий трикутник»).
+@use '1-settings/root' as *;
+@use '3-generic' as *;
+@use '4-elements' as *;
+@use '5-objects' as *;
+@use '6-components' as *;
+@use '7-utilities' as *;
