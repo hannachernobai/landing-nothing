@@ -1,0 +1,27 @@
+@use '../2-tools' as *;
+
+// Усі рядки (3 категорії + кнопка «View all») на одній сітці з однаковим кроком
+.c-categories {
+  row-gap: var(--space-40);
+
+  @include mq(md) {
+    row-gap: var(--space-56);
+  }
+
+  &__item {
+    grid-column: 1 / -1;
+  }
+
+  // кнопка: 2 колонки (320), 6 (744), 4 (1260)
+  &__more {
+    grid-column: 1 / -1;
+
+    @include mq(lg) {
+      grid-column: span 4;
+    }
+  }
+
+  &__button {
+    width: 100%;
+  }
+}

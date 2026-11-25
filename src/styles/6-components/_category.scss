@@ -1,0 +1,52 @@
+@use '../2-tools' as *;
+
+// Широке фото: 1 колонка (320), 4 (744), 8 (1260); квадрат: 1 / 2 / 4
+.c-category {
+  &__media {
+    margin: 0;
+
+    &--wide {
+      grid-column: span 1;
+
+      @include mq(md) {
+        grid-column: span 4;
+      }
+
+      @include mq(lg) {
+        grid-column: span 8;
+      }
+    }
+
+    &--square {
+      grid-column: span 1;
+
+      @include mq(md) {
+        grid-column: span 2;
+      }
+
+      @include mq(lg) {
+        grid-column: span 4;
+      }
+    }
+  }
+
+  // в другому рядку квадрат стоїть ліворуч (8 + 4 / 4 + 8)
+  &--reverse &__media--wide {
+    order: 2;
+  }
+
+  &__image {
+    width: 100%;
+    height: var(--category-h);
+    background: var(--color-surface-menu);
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &__title {
+    margin-top: var(--space-16);
+
+    @include text(var(--fw-bold), var(--fs-subtitle), var(--lh-body), var(--font-heading));
+  }
+}
