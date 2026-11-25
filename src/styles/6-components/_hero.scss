@@ -1,0 +1,32 @@
+@use '../2-tools' as *;
+
+// Зображення на всю ширину viewport; заголовок займає 2 / 4 / 6 колонок
+.c-hero {
+  position: relative;
+
+  &__image {
+    width: 100%;
+    height: var(--hero-h);
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &__inner {
+    position: absolute;
+    inset: auto 0 var(--hero-pad-b);
+  }
+
+  &__title {
+    grid-column: span 2;
+
+    @include text(var(--fw-bold), var(--fs-display), var(--lh-tight), var(--font-heading));
+
+    @include mq(md) {
+      grid-column: span 4;
+    }
+
+    @include mq(lg) {
+      grid-column: span 6;
+    }
+  }
+}
