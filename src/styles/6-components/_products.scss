@@ -1,0 +1,18 @@
+@use '../2-tools' as *;
+
+// Список карток: 2 колонки (320), 6 (744), по 4 з 12 (1260)
+.c-products {
+  row-gap: var(--space-40);
+
+  @include mq(md) {
+    row-gap: var(--space-56);
+  }
+
+  &__item {
+    grid-column: 1 / -1;
+
+    @include mq(lg) {
+      grid-column: span 4;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+@use '../2-tools' as *;
+
+.c-button {
+  @include flex-center;
+
+  min-height: 56px;
+  padding-inline: var(--space-24);
+  color: var(--color-white);
+  cursor: pointer;
+  background: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-md);
+
+  @include text(var(--fw-bold), var(--fs-button), var(--lh-button), var(--font-heading));
+  @include transition(background-color, border-color, color);
+
+  &:hover {
+    color: var(--color-text);
+    background: var(--color-surface);
+    border-color: var(--color-surface-border);
+  }
+
+  &:active {
+    color: var(--color-white);
+    background: var(--color-primary-pressed);
+    border-color: var(--color-primary-pressed);
+  }
+}

@@ -1,0 +1,35 @@
+@use '../2-tools' as *;
+
+.c-product-card {
+  &__image {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--color-surface-menu);
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+    object-position: center;
+  }
+
+  // текст у макеті на 1260 вужчий за картку (280 з 324)
+  &__body {
+    margin-top: var(--space-24);
+
+    @include mq(lg) {
+      max-width: 280px;
+    }
+  }
+
+  &__title {
+    @include text(var(--fw-bold), var(--fs-card-title), var(--lh-body), var(--font-heading));
+  }
+
+  &__text {
+    margin-top: var(--space-8);
+  }
+
+  &__price {
+    margin-top: var(--space-12);
+
+    @include text(var(--fw-bold), var(--fs-body), var(--lh-body), var(--font-heading));
+  }
+}

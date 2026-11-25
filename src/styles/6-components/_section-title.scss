@@ -1,0 +1,5 @@
+@use '../2-tools' as *;
+
+.c-section-title {
+  @include text(var(--fw-bold), var(--fs-title), var(--lh-tight), var(--font-heading));
+}
