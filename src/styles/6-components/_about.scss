@@ -1,0 +1,19 @@
+@use '../2-tools' as *;
+
+// Заголовок і текст: стовпчик (320), 3 + 3 колонки (744), 6 + 6 від колонки 7 (1260)
+.c-about {
+  row-gap: var(--space-24);
+
+  &__title,
+  &__text {
+    grid-column: span 2;
+
+    @include mq(md) {
+      grid-column: span 3;
+    }
+
+    @include mq(lg) {
+      grid-column: span 6;
+    }
+  }
+}

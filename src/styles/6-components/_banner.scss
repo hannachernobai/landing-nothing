@@ -1,0 +1,9 @@
+// Банер на всю ширину viewport, висота фіксована
+.c-banner {
+  &__image {
+    width: 100%;
+    height: var(--band-h);
+    object-fit: cover;
+    object-position: center;
+  }
+}
