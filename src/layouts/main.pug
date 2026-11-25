@@ -9,18 +9,16 @@ html(lang='en')
       meta(charset='utf-8')
       meta(name='viewport', content='width=device-width, initial-scale=1')
     block title
-      title Keepsake
+      title Nothing
     block fonts
       include ../includes/fonts
     block styles
       link(rel='stylesheet', href='/src/styles/main.scss')
   body#top
     include ../includes/sprite.svg
-    a.skip-link(href='#main') Skip to content
+    a.c-skip-link(href='#main') Skip to content
     block header
     main#main
       block content
     block footer
-    a.to-top(href='#top', aria-label='Back to top')
-      +icon('up')
     block scripts

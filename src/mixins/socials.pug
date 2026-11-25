@@ -1,7 +1,0 @@
-//- +socials(items[, variant]) — список соцмереж; variant додає модифікатор socials--<variant>
-mixin socials(items, variant)
-  ul.socials(class=variant ? `socials--${variant}` : false)&attributes(attributes)
-    each item in items
-      li
-        a.socials__link(href=item.href, aria-label=item.label)
-          +icon(item.icon)

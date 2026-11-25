@@ -1,0 +1,6 @@
+//- +button(text[, href][, type]) — основна кнопка: <a>, якщо є href, інакше <button>
+mixin button(text, href, type = 'button')
+  if href
+    a.c-button(href=href)&attributes(attributes)= text
+  else
+    button.c-button(type=type)&attributes(attributes)= text
